@@ -157,7 +157,7 @@ export default {
   methods: {
     // Go to next question
     next: function () {
-      if (!this.userResponses[this.questionIndex]) {
+      if (this.userResponses[this.questionIndex] == null) {
         this.errorMessage = "Please select an answer before continuing.";
         this.errorIndex = this.questionIndex;
         return;
@@ -183,7 +183,7 @@ export default {
 
     restart: function () {
       this.questionIndex = 0;
-      this.userResponses = Array(this.quiz.questions.length).fill(undefined);
+      this.userResponses = Array.from({ length: this.quiz.questions.length });
       this.clearError();
     },
 
