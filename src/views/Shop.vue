@@ -81,9 +81,6 @@
 
         <v-btn
           to="/cart"
-          fixed
-          bottom
-          right
           icon
           dark
           size="small"

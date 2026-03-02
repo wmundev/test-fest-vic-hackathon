@@ -125,7 +125,7 @@
                 <v-card class="elevation-0" variant="flat" color="transparent">
                   <v-card-text class="text-center">
                     <v-icon size="x-large" class="text-blue-lighten-2"
-                      >mdi-wrench</v-icon
+                      >mdi-heart-pulse</v-icon
                     >
                   </v-card-text>
                   <v-card-title class="justify-center">
