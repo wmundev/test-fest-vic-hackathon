@@ -1,170 +1,189 @@
 <template>
   <div class="home">
-      <section>
-        <v-parallax :src="require('@/assets/dark.jpg')" darkness height="600">
-          <v-layout column align-center justify-center class="white--text">
-            <div class>
-              <img :src="require('@/assets/icons/TranBg1.svg')" alt="Vuetify.js" height="200">
-            </div>
-            <h1 class="white--text mb-2 display-1 text-xs-center">Get tested for HIV for free!</h1>
-            <div class="subheading mb-3 text-xs-center"></div>
-          
+    <section>
+      <v-parallax :src="require('@/assets/dark.jpg')">
+        <v-row
+          align="center"
+          justify="center"
+          class="text-white"
+          style="height: 600px"
+        >
+          <v-col cols="12" class="text-center">
+            <img
+              :src="require('@/assets/icons/TranBg1.svg')"
+              alt="Vuetify.js"
+              height="200"
+            />
+            <h1 class="text-white mb-2 text-h4 text-center">
+              Get tested for HIV for free!
+            </h1>
+            <div class="text-subtitle-1 mb-3 text-center"></div>
 
-              <v-btn
-                class="blue lighten-2 mt-5"
-                dark
-                large to="/quiz"
-                v-on:click="showQuizMethod"
-              >Get started</v-btn>
-          </v-layout>
-        </v-parallax>
-      </section>
+            <v-btn
+              class="bg-blue-lighten-2 mt-5"
+              dark
+              size="large"
+              to="/quiz"
+              v-on:click="showQuizMethod"
+              >Get started</v-btn
+            >
+          </v-col>
+        </v-row>
+      </v-parallax>
+    </section>
 
-      <section>
-        <v-layout column wrap class="my-5" align-center>
-          <v-flex xs12 sm6 md6 class="my-3">
-            <h2 class="headline">HIV Testing Kit</h2>
-            <span class="subheading">Get a free HIV Testing Kit today!</span>
-            <p>
-              When you complete the quiz, you can get a free HIV testing kit delivered to your house or at
-              any of our vending machine at convenient locations around Australia!
-            </p>
-          </v-flex>
-          <v-flex xs12 sm6 md6 class="my-3">
-            <div id="map">
-              <v-toolbar dense floating id="map-search">
-                <v-text-field hide-details prepend-icon="search" single-line></v-text-field>
+    <section>
+      <v-row class="my-5" justify="center">
+        <v-col cols="12" sm="6" md="6" class="my-3">
+          <h2 class="text-h5">HIV Testing Kit</h2>
+          <span class="text-subtitle-1">Get a free HIV Testing Kit today!</span>
+          <p>
+            When you complete the quiz, you can get a free HIV testing kit
+            delivered to your house or at any of our vending machine at
+            convenient locations around Australia!
+          </p>
+        </v-col>
+        <v-col cols="12" sm="6" md="6" class="my-3">
+          <div id="map">
+            <v-toolbar dense floating id="map-search">
+              <v-text-field
+                hide-details
+                prepend-icon="mdi-magnify"
+                single-line
+              ></v-text-field>
 
-                <v-btn icon>
-                  <v-icon>my_location</v-icon>
-                </v-btn>
+              <v-btn icon>
+                <v-icon>mdi-crosshairs-gps</v-icon>
+              </v-btn>
 
-                <v-btn icon>
-                  <v-icon>more_vert</v-icon>
-                </v-btn>
-              </v-toolbar>
-            </div>
-          </v-flex>
-        </v-layout>
-        <v-layout row wrap class="my-5" align-center>
-          <v-flex xs-12 md-12>
-            <h1>Benefits of HIV Testing</h1>
-          </v-flex>
-        </v-layout>
-        <v-layout column wrap class="my-5" align-center>
-          <v-flex xs12>
-            <v-container grid-list-xl>
-              <v-layout row wrap align-center>
-                <v-flex xs12 md3>
-                  <v-card class="elevation-0 transparent">
-                    <v-card-text class="text-xs-center">
-                      <v-icon x-large class="blue--text text--lighten-2">color_lens</v-icon>
-                    </v-card-text>
-                    <v-card-title primary-title class="layout justify-center">
-                      <div class="headline text-xs-center">Early detection</div>
-                    </v-card-title>
-                    <v-card-text>Early detection is the key to slowing the spread of HIV</v-card-text>
-                  </v-card>
-                </v-flex>
-                <v-flex xs12 md3>
-                  <v-card class="elevation-0 transparent">
-                    <v-card-text class="text-xs-center">
-                      <v-icon x-large class="blue--text text--lighten-2">flash_on</v-icon>
-                    </v-card-text>
-                    <v-card-title primary-title class="layout justify-center">
-                      <div class="headline">Less likely to transmit disease</div>
-                    </v-card-title>
-                    <v-card-text>
-                      HIV positive people who KNOW their status are
-                      <strong>less likely</strong>
-                      to transmit the virus to someone else.
-                    </v-card-text>
-                  </v-card>
-                </v-flex>
-                <v-flex xs12 md3>
-                  <v-card class="elevation-0 transparent">
-                    <v-card-text class="text-xs-center">
-                      <v-icon x-large class="blue--text text--lighten-2">build</v-icon>
-                    </v-card-text>
-                    <v-card-title primary-title class="layout justify-center">
-                      <div class="headline text-xs-center">Fight HIV</div>
-                    </v-card-title>
-                    <v-card-text>
-                      Early detection allows for the HIV positive person to receive anti-HIV
-                      medications to fight the HIV
-                    </v-card-text>
-                  </v-card>
-                </v-flex>
-                <v-flex xs12 md3>
-                  <v-card class="elevation-0 transparent">
-                    <v-card-text class="text-xs-center">
-                      <v-icon x-large class="blue--text text--lighten-2">build</v-icon>
-                    </v-card-text>
-                    <v-card-title primary-title class="layout justify-center">
-                      <div class="headline text-xs-center">Longer-term survival</div>
-                    </v-card-title>
-                    <v-card-text>Earlier treatment is the key to longer-term survival and higher CD4 levels.</v-card-text>
-                  </v-card>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-flex>
-        </v-layout>
-      </section>
+              <v-btn icon>
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </v-toolbar>
+          </div>
+        </v-col>
+      </v-row>
+      <v-row class="my-5" justify="center">
+        <v-col cols="12">
+          <h1>Benefits of HIV Testing</h1>
+        </v-col>
+      </v-row>
+      <v-row class="my-5" justify="center">
+        <v-col cols="12">
+          <v-container>
+            <v-row align="center">
+              <v-col cols="12" md="3">
+                <v-card class="elevation-0" variant="flat" color="transparent">
+                  <v-card-text class="text-center">
+                    <v-icon size="x-large" class="text-blue-lighten-2"
+                      >mdi-palette</v-icon
+                    >
+                  </v-card-text>
+                  <v-card-title class="justify-center">
+                    <div class="text-h5 text-center">Early detection</div>
+                  </v-card-title>
+                  <v-card-text
+                    >Early detection is the key to slowing the spread of
+                    HIV</v-card-text
+                  >
+                </v-card>
+              </v-col>
+              <v-col cols="12" md="3">
+                <v-card class="elevation-0" variant="flat" color="transparent">
+                  <v-card-text class="text-center">
+                    <v-icon size="x-large" class="text-blue-lighten-2"
+                      >mdi-flash</v-icon
+                    >
+                  </v-card-text>
+                  <v-card-title class="justify-center">
+                    <div class="text-h5">Less likely to transmit disease</div>
+                  </v-card-title>
+                  <v-card-text>
+                    HIV positive people who KNOW their status are
+                    <strong>less likely</strong>
+                    to transmit the virus to someone else.
+                  </v-card-text>
+                </v-card>
+              </v-col>
+              <v-col cols="12" md="3">
+                <v-card class="elevation-0" variant="flat" color="transparent">
+                  <v-card-text class="text-center">
+                    <v-icon size="x-large" class="text-blue-lighten-2"
+                      >mdi-wrench</v-icon
+                    >
+                  </v-card-text>
+                  <v-card-title class="justify-center">
+                    <div class="text-h5 text-center">Fight HIV</div>
+                  </v-card-title>
+                  <v-card-text>
+                    Early detection allows for the HIV positive person to
+                    receive anti-HIV medications to fight the HIV
+                  </v-card-text>
+                </v-card>
+              </v-col>
+              <v-col cols="12" md="3">
+                <v-card class="elevation-0" variant="flat" color="transparent">
+                  <v-card-text class="text-center">
+                    <v-icon size="x-large" class="text-blue-lighten-2"
+                      >mdi-wrench</v-icon
+                    >
+                  </v-card-text>
+                  <v-card-title class="justify-center">
+                    <div class="text-h5 text-center">Longer-term survival</div>
+                  </v-card-title>
+                  <v-card-text
+                    >Earlier treatment is the key to longer-term survival and
+                    higher CD4 levels.</v-card-text
+                  >
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-col>
+      </v-row>
+    </section>
 
-      <section>
-        <!--<v-layout column align-center justify-center>-->
-        <v-layout row wrap justify-center class="my-5">
-          <v-flex xs12 sm4>
-            <v-card class="elevation-0 transparent">
-              <v-card-title primary-title class="layout justify-center">
-                <div class="headline">Company info</div>
-              </v-card-title>
-              <v-card-text>
-                <p>
-                  We are a startup focus on providing essential HIV testing to at risk people
-                  living in Australia completely free!
-                </p>
-              </v-card-text>
-            </v-card>
-          </v-flex>
-          <v-flex xs12 sm4 offset-sm1>
-            <v-card class="elevation-0 transparent">
-              <v-card-title primary-title class="layout justify-center">
-                <div class="headline">Contact us</div>
-              </v-card-title>
-              <v-card-text></v-card-text>
-              <v-list class="transparent">
-                <v-list-tile>
-                  <v-list-tile-action>
-                    <v-icon class="blue--text text--lighten-2">phone</v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-content>
-                    <v-list-tile-title>1800 659 547</v-list-tile-title>
-                  </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile>
-                  <v-list-tile-action>
-                    <v-icon class="blue--text text--lighten-2">place</v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-content>
-                    <v-list-tile-title>Melbourne 3000, Victoria, Australia</v-list-tile-title>
-                  </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile>
-                  <v-list-tile-action>
-                    <v-icon class="blue--text text--lighten-2">email</v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-content>
-                    <v-list-tile-title>ceo@onedrop.com</v-list-tile-title>
-                  </v-list-tile-content>
-                </v-list-tile>
-              </v-list>
-            </v-card>
-          </v-flex>
-        </v-layout>
-        <!--</v-layout>-->
-      </section>
+    <section>
+      <v-row justify="center" class="my-5">
+        <v-col cols="12" sm="4">
+          <v-card class="elevation-0" variant="flat" color="transparent">
+            <v-card-title class="justify-center">
+              <div class="text-h5">Company info</div>
+            </v-card-title>
+            <v-card-text>
+              <p>
+                We are a startup focus on providing essential HIV testing to at
+                risk people living in Australia completely free!
+              </p>
+            </v-card-text>
+          </v-card>
+        </v-col>
+        <v-col cols="12" sm="4" offset-sm="1">
+          <v-card class="elevation-0" variant="flat" color="transparent">
+            <v-card-title class="justify-center">
+              <div class="text-h5">Contact us</div>
+            </v-card-title>
+            <v-card-text></v-card-text>
+            <v-list bg-color="transparent">
+              <v-list-item prepend-icon="mdi-phone" class="text-blue-lighten-2">
+                <v-list-item-title>1800 659 547</v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                prepend-icon="mdi-map-marker"
+                class="text-blue-lighten-2"
+              >
+                <v-list-item-title
+                  >Melbourne 3000, Victoria, Australia</v-list-item-title
+                >
+              </v-list-item>
+              <v-list-item prepend-icon="mdi-email" class="text-blue-lighten-2">
+                <v-list-item-title>ceo@onedrop.com</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-card>
+        </v-col>
+      </v-row>
+    </section>
   </div>
 </template>
 
@@ -174,7 +193,7 @@ import L from "leaflet";
 export default {
   name: "Home",
   components: {},
-  mounted: function() {
+  mounted: function () {
     let mymap = L.map("map").setView([-37.8001008, 144.95825360000003], 13);
     L.tileLayer(
       "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}",
@@ -184,8 +203,8 @@ export default {
         maxZoom: 18,
         id: "mapbox.streets",
         accessToken:
-          "pk.eyJ1Ijoid2lsc29ubXVuIiwiYSI6ImNqcDU2eGxoajEwZnEzcXMwb3g0MDV1dXkifQ.z9rSU-J-ZLBpjh5cSsbJng"
-      }
+          process.env.VUE_APP_MAPBOX_ACCESS_TOKEN || "",
+      },
     ).addTo(mymap);
 
     //add marker to map, peter institute
@@ -199,12 +218,12 @@ export default {
       color: "red",
       fillColor: "#f03",
       fillOpacity: 0.5,
-      radius: 500
+      radius: 500,
     }).addTo(mymap);
   },
   data() {
     return {};
-  }
+  },
 };
 </script>
 
