@@ -1,35 +1,48 @@
 <template>
-    <v-container>
-        <v-layout
-            row
-            wrap
-        >
-            <v-flex xs12 sm12 md12>
-            <v-data-table
-                    :headers="headers"
-                    :items="desserts"
-                    class="elevation-1"
-            >
-                <template slot="items" slot-scope="props">
-                    <td>{{ props.item.name }}</td>
-                    <td class="text-xs-right">{{ props.item.calories }}</td>
-                    <td class="text-xs-right">{{ props.item.fat }}</td>
-                    <td class="text-xs-right">{{ props.item.carbs }}</td>
-                    <td class="text-xs-right">{{ props.item.protein }}</td>
-                    <td class="text-xs-right">{{ props.item.iron }}</td>
-                </template>
-            </v-data-table>
-            </v-flex>
-        </v-layout>
-    </v-container>
+  <v-container>
+    <v-row>
+      <v-col cols="12">
+        <v-table>
+          <thead>
+            <tr>
+              <th v-for="header in headers" :key="header.value">
+                {{ header.text }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in desserts" :key="item.name">
+              <td>{{ item.name }}</td>
+              <td class="text-right">{{ item.calories }}</td>
+              <td class="text-right">{{ item.fat }}</td>
+              <td class="text-right">{{ item.carbs }}</td>
+              <td class="text-right">{{ item.protein }}</td>
+              <td class="text-right">{{ item.iron }}</td>
+            </tr>
+          </tbody>
+        </v-table>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-    export default {
-        name: "Cart"
-    }
+export default {
+  name: "Cart",
+  data() {
+    return {
+      headers: [
+        { text: "Name", value: "name" },
+        { text: "Calories", value: "calories" },
+        { text: "Fat (g)", value: "fat" },
+        { text: "Carbs (g)", value: "carbs" },
+        { text: "Protein (g)", value: "protein" },
+        { text: "Iron (%)", value: "iron" },
+      ],
+      desserts: [],
+    };
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

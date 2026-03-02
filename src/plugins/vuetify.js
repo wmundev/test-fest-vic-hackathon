@@ -1,7 +1,13 @@
-import Vue from 'vue'
-import Vuetify from 'vuetify/lib'
-import 'vuetify/src/stylus/app.styl'
+import "vuetify/styles";
+import { createVuetify } from "vuetify";
+import * as components from "vuetify/components";
+import * as directives from "vuetify/directives";
+import "@mdi/font/css/materialdesignicons.css";
 
-Vue.use(Vuetify, {
-  iconfont: 'md',
-})
+export default createVuetify({
+  components,
+  directives,
+  icons: {
+    defaultSet: "mdi",
+  },
+});
