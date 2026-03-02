@@ -79,8 +79,10 @@
                       >mdi-palette</v-icon
                     >
                   </v-card-text>
-                  <v-card-title class="justify-center">
-                    <div class="text-h5 text-center">Early detection</div>
+                  <v-card-title class="justify-center text-wrap">
+                    <div class="text-h5 text-center text-wrap">
+                      Early detection
+                    </div>
                   </v-card-title>
                   <v-card-text
                     >Early detection is the key to slowing the spread of
@@ -95,8 +97,10 @@
                       >mdi-flash</v-icon
                     >
                   </v-card-text>
-                  <v-card-title class="justify-center">
-                    <div class="text-h5">Less likely to transmit disease</div>
+                  <v-card-title class="justify-center text-wrap">
+                    <div class="text-h5 text-center text-wrap">
+                      Less likely to transmit disease
+                    </div>
                   </v-card-title>
                   <v-card-text>
                     HIV positive people who KNOW their status are
@@ -112,8 +116,8 @@
                       >mdi-wrench</v-icon
                     >
                   </v-card-text>
-                  <v-card-title class="justify-center">
-                    <div class="text-h5 text-center">Fight HIV</div>
+                  <v-card-title class="justify-center text-wrap">
+                    <div class="text-h5 text-center text-wrap">Fight HIV</div>
                   </v-card-title>
                   <v-card-text>
                     Early detection allows for the HIV positive person to
@@ -128,8 +132,10 @@
                       >mdi-heart-pulse</v-icon
                     >
                   </v-card-text>
-                  <v-card-title class="justify-center">
-                    <div class="text-h5 text-center">Longer-term survival</div>
+                  <v-card-title class="justify-center text-wrap">
+                    <div class="text-h5 text-center text-wrap">
+                      Longer-term survival
+                    </div>
                   </v-card-title>
                   <v-card-text
                     >Earlier treatment is the key to longer-term survival and
