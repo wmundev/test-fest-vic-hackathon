@@ -29,58 +29,103 @@
                   >How safe are you?</v-btn
                 >
               </div>
-              <div v-if="showQuiz" class="large-12 columns">
-                <h1>{{ quiz.title }}</h1>
+              <div v-if="showQuiz">
+                <v-card
+                  class="mx-auto pa-6"
+                  max-width="600"
+                  elevation="8"
+                  rounded="lg"
+                >
+                  <v-card-title class="text-h5 text-center mb-2">
+                    {{ quiz.title }}
+                  </v-card-title>
 
-                <div class="callout">
-                  <div :key="index" v-for="(question, index) in quiz.questions">
-                    <!-- Hide all questions, show only the one with index === to current question index -->
-                    <div v-show="index === questionIndex">
-                      <h3>{{ question.text }}</h3>
+                  <v-card-text>
+                    <div
+                      :key="index"
+                      v-for="(question, index) in quiz.questions"
+                    >
+                      <div v-show="index === questionIndex">
+                        <div class="text-h6 mb-2 text-left">
+                          Question {{ index + 1 }} of
+                          {{ quiz.questions.length }}
+                        </div>
+                        <v-divider class="mb-4"></v-divider>
+                        <div class="text-h6 mb-4 text-left">
+                          {{ question.text }}
+                        </div>
 
-                      <ol>
-                        <!-- for each response of the current question -->
-                        <li
-                          v-for="response in question.responses"
-                          :key="response.text"
+                        <v-radio-group
+                          v-model="userResponses[index]"
+                          :error-messages="
+                            errorIndex === index ? errorMessage : ''
+                          "
+                          @update:modelValue="clearError"
                         >
-                          <label>
-                            <input
-                              type="radio"
-                              v-bind:value="response.value"
-                              v-bind:name="index"
-                              v-model="userResponses[index]"
-                            />
-                            {{ response.text }}
-                          </label>
-                        </li>
-                      </ol>
+                          <v-radio
+                            v-for="response in question.responses"
+                            :key="response.text"
+                            :label="response.text"
+                            :value="response.value"
+                            color="blue-lighten-2"
+                            class="mb-2"
+                          ></v-radio>
+                        </v-radio-group>
 
-                      <!-- The two navigation buttons -->
-                      <!-- Note: prev is hidden on first question -->
-                      <v-btn
-                        class="bg-blue-lighten-2 mt-5"
-                        dark
-                        v-if="questionIndex > 0"
-                        v-on:click="prev"
-                        >prev</v-btn
-                      >
+                        <v-card-actions class="justify-center mt-2">
+                          <v-btn
+                            variant="outlined"
+                            color="blue-lighten-2"
+                            v-if="questionIndex > 0"
+                            v-on:click="prev"
+                            prepend-icon="mdi-arrow-left"
+                            >Previous</v-btn
+                          >
 
-                      <v-btn
-                        class="bg-blue-lighten-2 mt-5"
-                        dark
-                        v-on:click="next"
-                        >next</v-btn
-                      >
+                          <v-btn
+                            color="blue-lighten-2"
+                            variant="flat"
+                            v-on:click="next"
+                            append-icon="mdi-arrow-right"
+                            >{{
+                              questionIndex === quiz.questions.length - 1
+                                ? "See Results"
+                                : "Next"
+                            }}</v-btn
+                          >
+                        </v-card-actions>
+                      </div>
                     </div>
-                  </div>
 
-                  <!-- Last page, quiz is finished, display result -->
-                  <div v-show="questionIndex === quiz.questions.length">
-                    <h3>Your Results</h3>
-                    <p>You are: {{ score() }}</p>
-                  </div>
-                </div>
+                    <!-- Last page, quiz is finished, display result -->
+                    <div v-show="questionIndex === quiz.questions.length">
+                      <v-icon size="64" color="blue-lighten-2" class="mb-4"
+                        >mdi-chart-bar</v-icon
+                      >
+                      <div class="text-h5 mb-4">Your Results</div>
+                      <v-chip size="x-large" color="blue-lighten-2" label>
+                        {{ score() }}
+                      </v-chip>
+                      <v-card-actions class="justify-center mt-6">
+                        <v-btn
+                          variant="outlined"
+                          color="blue-lighten-2"
+                          v-on:click="restart"
+                          prepend-icon="mdi-restart"
+                          >Take Again</v-btn
+                        >
+                      </v-card-actions>
+                    </div>
+                  </v-card-text>
+
+                  <v-progress-linear
+                    :model-value="progressPercent"
+                    color="blue-lighten-2"
+                    height="6"
+                    rounded
+                    class="mt-2"
+                  ></v-progress-linear>
+                </v-card>
               </div>
             </v-col>
           </v-row>
@@ -99,21 +144,47 @@ export default {
       questionIndex: 0,
       userResponses: Array(),
       showQuiz: false,
+      errorMessage: "",
+      errorIndex: -1,
     };
+  },
+  computed: {
+    progressPercent() {
+      if (!this.quiz.questions || this.quiz.questions.length === 0) return 0;
+      return (this.questionIndex / this.quiz.questions.length) * 100;
+    },
   },
   methods: {
     // Go to next question
     next: function () {
+      if (!this.userResponses[this.questionIndex]) {
+        this.errorMessage = "Please select an answer before continuing.";
+        this.errorIndex = this.questionIndex;
+        return;
+      }
+      this.clearError();
       this.questionIndex++;
       console.log(this.userResponses); // eslint-disable-line no-console
     },
     // Go to previous question
     prev: function () {
+      this.clearError();
       this.questionIndex--;
+    },
+
+    clearError: function () {
+      this.errorMessage = "";
+      this.errorIndex = -1;
     },
 
     showQuizMethod: function () {
       this.showQuiz = true;
+    },
+
+    restart: function () {
+      this.questionIndex = 0;
+      this.userResponses = Array(this.quiz.questions.length).fill(undefined);
+      this.clearError();
     },
 
     score: function () {
