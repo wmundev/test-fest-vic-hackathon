@@ -42,7 +42,7 @@ describe("Cart.vue", () => {
     expect(headers.length).toBe(6);
   });
 
-  it("starts with an empty desserts list (no table rows)", () => {
+  it("starts with an empty items list (no table body rows)", () => {
     const { container } = renderCart();
     const rows = container.querySelectorAll("tbody tr");
     expect(rows.length).toBe(0);
