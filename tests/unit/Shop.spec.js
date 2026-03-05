@@ -1,5 +1,4 @@
 import { shallowMount } from "@vue/test-utils";
-import "@testing-library/jest-dom";
 import Shop from "@/views/Shop.vue";
 
 // Create stubs that render their default slot content so text is accessible

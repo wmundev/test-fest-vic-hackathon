@@ -1,17 +1,16 @@
-import { render, screen } from "@testing-library/vue";
-import "@testing-library/jest-dom";
+import { shallowMount } from "@vue/test-utils";
 import Cart from "@/views/Cart.vue";
-import { createVuetify } from "vuetify";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
 
-const vuetify = createVuetify({ components, directives });
+// Create stubs that render their default slot content so text is accessible
+const slotStub = { template: "<div><slot /></div>" };
 
 function renderCart() {
-  return render(Cart, {
+  return shallowMount(Cart, {
     global: {
-      plugins: [vuetify],
       stubs: {
+        "v-container": slotStub,
+        "v-row": slotStub,
+        "v-col": slotStub,
         "v-table": {
           template: "<table><slot /></table>",
         },
@@ -22,29 +21,29 @@ function renderCart() {
 
 describe("Cart.vue", () => {
   it("renders the component", () => {
-    renderCart();
-    expect(screen.getByText("Name")).toBeInTheDocument();
+    const wrapper = renderCart();
+    expect(wrapper.text()).toContain("Name");
   });
 
   it("renders all table headers", () => {
-    renderCart();
-    expect(screen.getByText("Name")).toBeInTheDocument();
-    expect(screen.getByText("Calories")).toBeInTheDocument();
-    expect(screen.getByText("Fat (g)")).toBeInTheDocument();
-    expect(screen.getByText("Carbs (g)")).toBeInTheDocument();
-    expect(screen.getByText("Protein (g)")).toBeInTheDocument();
-    expect(screen.getByText("Iron (%)")).toBeInTheDocument();
+    const wrapper = renderCart();
+    expect(wrapper.text()).toContain("Name");
+    expect(wrapper.text()).toContain("Calories");
+    expect(wrapper.text()).toContain("Fat (g)");
+    expect(wrapper.text()).toContain("Carbs (g)");
+    expect(wrapper.text()).toContain("Protein (g)");
+    expect(wrapper.text()).toContain("Iron (%)");
   });
 
   it("has correct initial data with headers", () => {
-    const { container } = renderCart();
-    const headers = container.querySelectorAll("th");
+    const wrapper = renderCart();
+    const headers = wrapper.findAll("th");
     expect(headers.length).toBe(6);
   });
 
   it("starts with an empty items list (no table body rows)", () => {
-    const { container } = renderCart();
-    const rows = container.querySelectorAll("tbody tr");
+    const wrapper = renderCart();
+    const rows = wrapper.findAll("tbody tr");
     expect(rows.length).toBe(0);
   });
 });
