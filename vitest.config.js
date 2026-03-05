@@ -6,13 +6,12 @@ import path from "path";
 // This handles Vue templates that use require('@/assets/...') which is a
 // webpack convention not natively supported in Vite/Vitest.
 function requireAssetStub() {
-  const assetRe =
-    /\brequire\s*\(\s*['"]([^'"]*\.(jpg|jpeg|png|gif|svg|webp|bmp|ico|woff|woff2|ttf|eot))['"]\s*\)/g;
   return {
     name: "require-asset-stub",
-    transform(code, id) {
+    transform(code) {
+      const assetRe =
+        /\brequire\s*\(\s*['"]([^'"]*\.(jpg|jpeg|png|gif|svg|webp|bmp|ico|woff|woff2|ttf|eot))['"]\s*\)/g;
       if (!assetRe.test(code)) return null;
-      assetRe.lastIndex = 0;
       const transformed = code.replace(assetRe, (_, assetPath) => {
         return JSON.stringify(assetPath);
       });
