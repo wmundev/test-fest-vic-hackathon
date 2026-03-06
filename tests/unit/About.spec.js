@@ -1,63 +1,50 @@
-import { shallowMount } from "@vue/test-utils";
+import { render, screen } from "@testing-library/vue";
 import About from "@/views/About.vue";
-
-function renderAbout() {
-  return shallowMount(About, {
-    global: {
-      stubs: {
-        "v-parallax": {
-          template: "<div><slot /></div>",
-        },
-        "v-row": { template: "<div><slot /></div>" },
-        "v-col": { template: "<div><slot /></div>" },
-      },
-    },
-  });
-}
 
 describe("About.vue", () => {
   it("renders the main heading", () => {
-    const wrapper = renderAbout();
-    expect(wrapper.text()).toContain("Why it is important to get tested");
+    render(About);
+    expect(
+      screen.getByText("Why it is important to get tested"),
+    ).toBeInTheDocument();
   });
 
   it("renders the page title", () => {
-    const wrapper = renderAbout();
-    expect(wrapper.text()).toContain("Why get tested for HIV");
+    render(About);
+    expect(screen.getByText("Why get tested for HIV")).toBeInTheDocument();
   });
 
   it("renders the importance of testing section", () => {
-    const wrapper = renderAbout();
-    expect(wrapper.text()).toContain("GETTING TESTED FOR HIV");
+    render(About);
+    expect(screen.getByText("GETTING TESTED FOR HIV")).toBeInTheDocument();
   });
 
   it("renders key educational sections", () => {
-    const wrapper = renderAbout();
-    expect(wrapper.text()).toContain("REGULARITY IS KEY");
-    expect(wrapper.text()).toContain("UNDERSTANDING HIV RAPID TESTING");
-    expect(wrapper.text()).toContain("HIV SELF-TESTING");
-    expect(wrapper.text()).toContain("WHERE TO TEST");
-    expect(wrapper.text()).toContain("SIGNS & SYMPTOMS");
+    render(About);
+    expect(screen.getByText("REGULARITY IS KEY")).toBeInTheDocument();
+    expect(
+      screen.getByText("UNDERSTANDING HIV RAPID TESTING"),
+    ).toBeInTheDocument();
+    expect(screen.getByText("HIV SELF-TESTING")).toBeInTheDocument();
+    expect(screen.getByText("WHERE TO TEST")).toBeInTheDocument();
+    expect(screen.getByText("SIGNS & SYMPTOMS")).toBeInTheDocument();
   });
 
   it("contains external resource links", () => {
-    const wrapper = renderAbout();
-    const dramaLink = wrapper.find(
-      'a[href="http://www.thedramadownunder.info/clinics/"]',
+    render(About);
+    const dramaLink = screen.getByRole("link", { name: "Drama Downunder" });
+    expect(dramaLink).toHaveAttribute(
+      "href",
+      "http://www.thedramadownunder.info/clinics/",
     );
-    expect(dramaLink.exists()).toBe(true);
-    expect(dramaLink.text()).toBe("Drama Downunder");
 
-    const endingHivLink = wrapper.find(
-      'a[href="http://endinghiv.org.au/"]',
-    );
-    expect(endingHivLink.exists()).toBe(true);
-    expect(endingHivLink.text()).toBe("Ending HIV");
+    const endingHivLink = screen.getByRole("link", { name: "Ending HIV" });
+    expect(endingHivLink).toHaveAttribute("href", "http://endinghiv.org.au/");
 
-    const timeToTestLink = wrapper.find(
-      'a[href="http://www.timetotest.org.au/"]',
+    const timeToTestLink = screen.getByRole("link", { name: "Time to Test" });
+    expect(timeToTestLink).toHaveAttribute(
+      "href",
+      "http://www.timetotest.org.au/",
     );
-    expect(timeToTestLink.exists()).toBe(true);
-    expect(timeToTestLink.text()).toBe("Time to Test");
   });
 });
