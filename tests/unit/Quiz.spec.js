@@ -1,6 +1,10 @@
 import { render, screen, fireEvent } from "@testing-library/vue";
 import Quiz from "@/views/Quiz.vue";
 
+// Helper to access the Vue component instance for testing internal logic.
+// Necessary because Vuetify components render as custom elements in tests
+// (without the full Vuetify plugin), preventing user interaction testing
+// through DOM events alone (e.g. radio buttons, form navigation).
 function getVm(container) {
   return container.firstElementChild.__vueParentComponent.proxy;
 }
