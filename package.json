@@ -20,6 +20,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.27.0",
     "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/user-event": "^14.6.1",
     "@testing-library/vue": "^8.1.0",
     "@vitejs/plugin-vue": "^6.0.4",
     "@vue/cli-plugin-babel": "^5.0.9",

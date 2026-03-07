@@ -27,10 +27,21 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  server: {
+    deps: {
+      // Vite must inline Vuetify so its ESM imports are handled correctly in jsdom
+      inline: ["vuetify"],
+    },
+  },
   test: {
     globals: true,
     environment: "jsdom",
     include: ["tests/unit/**/*.spec.{js,jsx,ts,tsx}"],
     setupFiles: ["tests/unit/setup.js"],
+    server: {
+      deps: {
+        inline: ["vuetify"],
+      },
+    },
   },
 });
