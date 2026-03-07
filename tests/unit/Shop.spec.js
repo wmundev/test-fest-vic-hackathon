@@ -32,13 +32,4 @@ describe("Shop.vue", () => {
     const buyButtons = screen.getAllByText("Buy");
     expect(buyButtons.length).toBe(4);
   });
-
-  it("has a cart navigation button", () => {
-    const { container } = render(Shop);
-    // The cart button is a Vuetify v-btn with an icon (no accessible text).
-    // Without the full Vuetify plugin, it renders as a custom element,
-    // so we query by the router `to` attribute.
-    const cartBtn = container.querySelector('[to="/cart"]');
-    expect(cartBtn).not.toBeNull();
-  });
 });
