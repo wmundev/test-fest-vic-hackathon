@@ -16,7 +16,7 @@ describe("router", () => {
 
   it("maps correct paths to route names", () => {
     const routes = router.getRoutes();
-    const routeMap = {};
+    const routeMap: Record<string, string> = {};
     routes.forEach((r) => {
       routeMap[r.name] = r.path;
     });

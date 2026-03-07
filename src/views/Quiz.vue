@@ -198,10 +198,11 @@ export default defineComponent({
     score: function (): string {
       //find the highest occurence in responses
       const modeMap: Record<string, number> = {};
-      let maxEl = this.userResponses[0]!;
+      let maxEl = this.userResponses[0] ?? "";
       let maxCount = 1;
       for (let i = 0; i < this.userResponses.length; i++) {
-        const el = this.userResponses[i]!;
+        const el = this.userResponses[i];
+        if (el == null) continue;
         if (modeMap[el] == null) modeMap[el] = 1;
         else modeMap[el]++;
         if (modeMap[el] > maxCount) {
