@@ -36,8 +36,10 @@
   </v-col>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "Card",
   props: {
     title: String,
@@ -46,7 +48,7 @@ export default {
     content: String,
     dropdownContent: String,
   },
-};
+});
 </script>
 
 <style scoped></style>

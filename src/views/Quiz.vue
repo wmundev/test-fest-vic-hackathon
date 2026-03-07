@@ -135,21 +135,29 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "home",
   data() {
     return {
-      quiz: {},
+      quiz: {} as {
+        title: string;
+        questions: {
+          text: string;
+          responses: { text: string; value: string }[];
+        }[];
+      },
       questionIndex: 0,
-      userResponses: Array(),
+      userResponses: Array<string | undefined>(),
       showQuiz: false,
       errorMessage: "",
       errorIndex: -1,
     };
   },
   computed: {
-    progressPercent() {
+    progressPercent(): number {
       if (!this.quiz.questions || this.quiz.questions.length === 0) return 0;
       return (this.questionIndex / this.quiz.questions.length) * 100;
     },
@@ -187,13 +195,13 @@ export default {
       this.clearError();
     },
 
-    score: function () {
+    score: function (): string {
       //find the highest occurence in responses
-      var modeMap = {};
-      var maxEl = this.userResponses[0],
-        maxCount = 1;
-      for (var i = 0; i < this.userResponses.length; i++) {
-        var el = this.userResponses[i];
+      const modeMap: Record<string, number> = {};
+      let maxEl = this.userResponses[0]!;
+      let maxCount = 1;
+      for (let i = 0; i < this.userResponses.length; i++) {
+        const el = this.userResponses[i]!;
         if (modeMap[el] == null) modeMap[el] = 1;
         else modeMap[el]++;
         if (modeMap[el] > maxCount) {
@@ -264,7 +272,7 @@ export default {
       ],
     };
   },
-};
+});
 </script>
 
 <style scoped>
