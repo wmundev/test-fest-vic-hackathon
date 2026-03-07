@@ -26,8 +26,10 @@
   </v-container>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "Cart",
   data() {
     return {
@@ -39,10 +41,10 @@ export default {
         { text: "Protein (g)", value: "protein" },
         { text: "Iron (%)", value: "iron" },
       ],
-      desserts: [],
+      desserts: [] as { name: string; calories: number; fat: number; carbs: number; protein: number; iron: string }[],
     };
   },
-};
+});
 </script>
 
 <style scoped></style>

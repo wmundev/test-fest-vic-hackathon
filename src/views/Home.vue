@@ -193,10 +193,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import L from "leaflet";
 
-export default {
+export default defineComponent({
   name: "Home",
   components: {},
   mounted: function () {
@@ -209,7 +210,7 @@ export default {
         maxZoom: 18,
         id: "mapbox.streets",
         accessToken: process.env.VUE_APP_MAPBOX_ACCESS_TOKEN || "",
-      },
+      } as L.TileLayerOptions,
     ).addTo(mymap);
 
     //add marker to map, peter institute
@@ -229,7 +230,7 @@ export default {
   data() {
     return {};
   },
-};
+});
 </script>
 
 <style scoped>

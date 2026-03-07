@@ -8,11 +8,11 @@ import path from "path";
 function requireAssetStub() {
   return {
     name: "require-asset-stub",
-    transform(code) {
+    transform(code: string) {
       const assetRe =
         /\brequire\s*\(\s*['"]([^'"]*\.(jpg|jpeg|png|gif|svg|webp|bmp|ico|woff|woff2|ttf|eot))['"]\s*\)/g;
       if (!assetRe.test(code)) return null;
-      const transformed = code.replace(assetRe, (_, assetPath) => {
+      const transformed = code.replace(assetRe, (_: string, assetPath: string) => {
         return JSON.stringify(assetPath);
       });
       return { code: transformed, map: null };
@@ -37,7 +37,7 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     include: ["tests/unit/**/*.spec.{js,jsx,ts,tsx}"],
-    setupFiles: ["tests/unit/setup.js"],
+    setupFiles: ["tests/unit/setup.ts"],
     server: {
       deps: {
         inline: ["vuetify"],
