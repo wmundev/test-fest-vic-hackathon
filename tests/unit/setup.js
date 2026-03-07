@@ -3,6 +3,7 @@ import { config } from "@vue/test-utils";
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
+import { createPinia } from "pinia";
 
 // Make CSS custom properties available in jsdom (Vuetify relies on them)
 window.CSS = window.CSS || {};
@@ -16,11 +17,12 @@ global.ResizeObserver = global.ResizeObserver || class ResizeObserver {
 };
 
 const vuetify = createVuetify({ components, directives });
+const pinia = createPinia();
 
 // @testing-library/vue delegates to @vue/test-utils mount().
 // config.global is the VTU-level default applied to every mount() call,
-// so every render() in every spec automatically has Vuetify registered.
-config.global.plugins = [vuetify];
+// so every render() in every spec automatically has Vuetify and Pinia registered.
+config.global.plugins = [vuetify, pinia];
 
 // VMain and VParallax require VApp's layout provider context which is not
 // available when mounting a single component in isolation. Stubbing them with
