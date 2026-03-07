@@ -28,6 +28,9 @@
         <v-btn variant="text" to="/">
           <v-icon>mdi-home</v-icon>
         </v-btn>
+        <v-btn variant="text" to="/about">
+          <v-icon>mdi-information</v-icon>
+        </v-btn>
         <v-btn variant="text" to="/quiz">
           <v-icon>mdi-comment-question</v-icon>
         </v-btn>
