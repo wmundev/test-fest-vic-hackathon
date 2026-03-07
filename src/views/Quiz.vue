@@ -1,143 +1,210 @@
 <template>
-  <div id="app" v-cloak>
-    <v-main>
-      <section>
-        <v-parallax :src="require('@/assets/dark.jpg')">
-          <v-row
-            align="center"
-            justify="center"
-            class="text-white"
-            style="height: 600px"
-          >
-            <v-col cols="12" class="text-center">
-              <div v-if="!showQuiz">
-                <h1 class="text-white mb-2 text-h4 text-center">
-                  RISK CALCULATOR
-                </h1>
+  <div class="quiz bg-surface" v-cloak>
+    <!-- Intro Section -->
+    <section
+      v-if="!showQuiz"
+      class="quiz__hero bg-primary text-white position-relative d-flex align-center min-vh-100"
+    >
+      <v-container class="quiz__hero-container py-16 py-md-24">
+        <v-row align="center" justify="center">
+          <v-col cols="12" md="8" lg="6" class="text-center">
+            <v-avatar color="white" size="100" class="mb-8 elevation-4">
+              <v-icon size="60" color="primary">mdi-shield-check</v-icon>
+            </v-avatar>
 
-                <div class="text-subtitle-1 mb-3 text-center">
-                  Use this calculator to find out the risk associated to
-                  scenarios based on anal sex and where condoms are not being
-                  used.
-                </div>
+            <h1
+              class="quiz__main-title text-h3 text-md-h2 font-weight-bold mb-6"
+            >
+              RISK CALCULATOR
+            </h1>
 
-                <v-btn
-                  class="bg-blue-lighten-2 mt-5"
-                  dark
-                  size="large"
-                  v-on:click="showQuizMethod"
-                  >How safe are you?</v-btn
-                >
+            <p
+              class="quiz__subtitle text-h6 font-weight-light opacity-80 mb-10"
+            >
+              Use this calculator to find out the risk associated to scenarios
+              based on anal sex and where condoms are not being used.
+            </p>
+
+            <v-btn
+              class="quiz__start-btn bg-white text-primary px-8 text-button font-weight-bold elevation-4 rounded-pill"
+              size="x-large"
+              v-on:click="showQuizMethod"
+            >
+              How safe are you?
+              <v-icon right class="ml-2">mdi-chevron-right</v-icon>
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </section>
+
+    <!-- Quiz Section -->
+    <section
+      v-if="showQuiz"
+      class="quiz__content py-16 min-vh-100 bg-grey-lighten-4 d-flex align-center"
+    >
+      <v-container>
+        <v-row justify="center">
+          <v-col cols="12" sm="10" md="8" lg="6">
+            <v-card
+              class="quiz__card elevation-6 rounded-xl overflow-hidden transition-all"
+            >
+              <div
+                class="quiz__card-header bg-primary pa-6 text-center text-white"
+              >
+                <h2 class="text-h5 font-weight-medium mb-0">
+                  {{ quiz.title }}
+                </h2>
               </div>
-              <div v-if="showQuiz">
-                <v-card
-                  class="mx-auto pa-6"
-                  max-width="600"
-                  elevation="8"
-                  rounded="lg"
-                >
-                  <v-card-title class="text-h5 text-center mb-2">
-                    {{ quiz.title }}
-                  </v-card-title>
 
-                  <v-card-text>
-                    <div
-                      :key="index"
-                      v-for="(question, index) in quiz.questions"
+              <v-progress-linear
+                :model-value="progressPercent"
+                color="secondary"
+                height="6"
+                class="quiz__progress"
+              ></v-progress-linear>
+
+              <v-card-text class="pa-6 pa-md-8 text-body-1">
+                <div :key="index" v-for="(question, index) in quiz.questions">
+                  <div
+                    v-show="index === questionIndex"
+                    class="quiz__question-block"
+                  >
+                    <div class="d-flex justify-space-between align-center mb-4">
+                      <span
+                        class="quiz__question-counter text-button font-weight-bold text-primary"
+                      >
+                        Question {{ index + 1 }} of
+                        {{ quiz.questions.length }}
+                      </span>
+                    </div>
+
+                    <h3
+                      class="quiz__question-text text-h5 font-weight-medium mb-6 text-on-surface"
                     >
-                      <div v-show="index === questionIndex">
-                        <div class="text-h6 mb-2 text-left">
-                          Question {{ index + 1 }} of
-                          {{ quiz.questions.length }}
-                        </div>
-                        <v-divider class="mb-4"></v-divider>
-                        <div class="text-h6 mb-4 text-left">
-                          {{ question.text }}
-                        </div>
+                      {{ question.text }}
+                    </h3>
 
-                        <v-radio-group
-                          v-model="userResponses[index]"
-                          :error-messages="
-                            errorIndex === index ? errorMessage : ''
-                          "
-                          @update:modelValue="clearError"
-                        >
+                    <v-radio-group
+                      v-model="userResponses[index]"
+                      :error-messages="errorIndex === index ? errorMessage : ''"
+                      @update:modelValue="clearError"
+                      class="quiz__radio-group"
+                    >
+                      <v-card
+                        v-for="response in question.responses"
+                        :key="response.text"
+                        variant="outlined"
+                        class="quiz__option-card mb-3 transition-all"
+                        :class="{
+                          'quiz__option-card--selected bg-primary-lighten-5 border-primary':
+                            userResponses[index] === response.value,
+                        }"
+                        @click="
+                          userResponses[index] = response.value;
+                          clearError();
+                        "
+                      >
+                        <v-card-text class="pa-2 pa-sm-3 d-flex align-center">
                           <v-radio
-                            v-for="response in question.responses"
-                            :key="response.text"
                             :label="response.text"
                             :value="response.value"
-                            color="blue-lighten-2"
-                            class="mb-2"
+                            color="primary"
+                            class="quiz__radio w-100"
+                            hide-details
                           ></v-radio>
-                        </v-radio-group>
+                        </v-card-text>
+                      </v-card>
+                    </v-radio-group>
 
-                        <v-card-actions class="justify-center mt-2">
-                          <v-btn
-                            variant="outlined"
-                            color="blue-lighten-2"
-                            v-if="questionIndex > 0"
-                            v-on:click="prev"
-                            prepend-icon="mdi-arrow-left"
-                            >Previous</v-btn
-                          >
-
-                          <v-btn
-                            color="blue-lighten-2"
-                            variant="flat"
-                            v-on:click="next"
-                            append-icon="mdi-arrow-right"
-                            >{{
-                              questionIndex === quiz.questions.length - 1
-                                ? "See Results"
-                                : "Next"
-                            }}</v-btn
-                          >
-                        </v-card-actions>
-                      </div>
-                    </div>
-
-                    <!-- Last page, quiz is finished, display result -->
-                    <div v-show="questionIndex === quiz.questions.length">
-                      <v-icon size="64" color="blue-lighten-2" class="mb-4"
-                        >mdi-chart-bar</v-icon
+                    <v-card-actions
+                      class="quiz__actions pa-0 mt-8 pt-4 border-t"
+                    >
+                      <v-btn
+                        variant="text"
+                        color="medium-emphasis"
+                        class="quiz__btn px-4 font-weight-bold text-none"
+                        v-if="questionIndex > 0"
+                        v-on:click="prev"
+                        prepend-icon="mdi-arrow-left"
                       >
-                      <div class="text-h5 mb-4">Your Results</div>
-                      <v-chip size="x-large" color="blue-lighten-2" label>
-                        {{ score() }}
-                      </v-chip>
-                      <v-card-actions class="justify-center mt-6">
-                        <v-btn
-                          variant="outlined"
-                          color="blue-lighten-2"
-                          v-on:click="restart"
-                          prepend-icon="mdi-restart"
-                          >Take Again</v-btn
-                        >
-                      </v-card-actions>
-                    </div>
-                  </v-card-text>
+                        Previous
+                      </v-btn>
 
-                  <v-progress-linear
-                    :model-value="progressPercent"
-                    color="blue-lighten-2"
-                    height="6"
-                    rounded
-                    class="mt-2"
-                  ></v-progress-linear>
-                </v-card>
-              </div>
-            </v-col>
-          </v-row>
-        </v-parallax>
-      </section>
-    </v-main>
+                      <v-spacer></v-spacer>
+
+                      <v-btn
+                        color="primary"
+                        variant="flat"
+                        class="quiz__btn px-6 font-weight-bold text-none rounded-pill"
+                        v-on:click="next"
+                        append-icon="mdi-arrow-right"
+                      >
+                        {{
+                          questionIndex === quiz.questions.length - 1
+                            ? "See Results"
+                            : "Next"
+                        }}
+                      </v-btn>
+                    </v-card-actions>
+                  </div>
+                </div>
+
+                <!-- Results Page -->
+                <div
+                  v-show="questionIndex === quiz.questions.length"
+                  class="quiz__results text-center py-6"
+                >
+                  <v-avatar
+                    color="primary-lighten-5"
+                    size="100"
+                    class="mb-6 mx-auto elevation-1"
+                  >
+                    <v-icon size="50" color="primary">mdi-chart-line</v-icon>
+                  </v-avatar>
+
+                  <h3 class="text-h4 font-weight-bold mb-2 text-on-surface">
+                    Your Results
+                  </h3>
+                  <p class="text-body-1 text-medium-emphasis mb-8">
+                    Based on your answers, here is your estimated risk level:
+                  </p>
+
+                  <v-chip
+                    size="x-large"
+                    class="quiz__result-chip px-8 py-6 text-h5 font-weight-bold elevation-2 mb-10"
+                    :color="getResultColor(score())"
+                  >
+                    {{ score() }}
+                  </v-chip>
+
+                  <v-divider class="mb-8"></v-divider>
+
+                  <v-card-actions class="justify-center">
+                    <v-btn
+                      variant="outlined"
+                      color="primary"
+                      class="quiz__btn px-6 font-weight-bold rounded-pill"
+                      size="large"
+                      v-on:click="restart"
+                      prepend-icon="mdi-restart"
+                    >
+                      Take Again
+                    </v-btn>
+                  </v-card-actions>
+                </div>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </section>
   </div>
 </template>
 
 <script>
 export default {
-  name: "home",
+  name: "QuizView",
   data() {
     return {
       quiz: {},
@@ -203,6 +270,15 @@ export default {
       }
       return maxEl;
     },
+
+    getResultColor(resultText) {
+      if (!resultText) return "primary";
+      const lower = resultText.toLowerCase();
+      if (lower.includes("high")) return "error";
+      if (lower.includes("medium")) return "warning";
+      if (lower.includes("low")) return "success";
+      return "primary";
+    },
   },
 
   created: function () {
@@ -267,22 +343,112 @@ export default {
 };
 </script>
 
-<style scoped>
-#app {
-  min-height: 100vh;
+<style lang="scss" scoped>
+.quiz {
+  height: 100%;
 
-  background: #bbc7ce;
-}
+  &__hero {
+    background: linear-gradient(
+      135deg,
+      var(--v-theme-primary, #1867c0) 0%,
+      #0d47a1 100%
+    );
+    overflow: hidden;
 
-#app > .row {
-  background: #fff;
-}
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: radial-gradient(
+        circle at 50% 100%,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 60%
+      );
+      pointer-events: none;
+    }
+  }
 
-h1 {
-  margin-bottom: 20px;
-}
+  &__hero-container {
+    position: relative;
+    z-index: 1;
+  }
 
-[v-cloak] {
-  display: none;
+  &__start-btn {
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+    }
+  }
+
+  &__content {
+    background-image: radial-gradient(
+      var(--v-theme-grey-lighten-2) 1px,
+      transparent 1px
+    );
+    background-size: 24px 24px;
+    background-color: var(--v-theme-grey-lighten-4);
+  }
+
+  &__card {
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  &__card-header {
+    background: linear-gradient(
+      135deg,
+      var(--v-theme-primary, #1867c0) 0%,
+      #1565c0 100%
+    );
+  }
+
+  &__option-card {
+    border-width: 2px !important;
+    border-color: rgba(0, 0, 0, 0.12) !important;
+    cursor: pointer;
+
+    &:hover:not(.quiz__option-card--selected) {
+      border-color: rgba(0, 0, 0, 0.24) !important;
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+
+    &--selected {
+      border-color: var(--v-theme-primary) !important;
+    }
+  }
+
+  &__radio {
+    // Ensures the radio takes full width for better click area
+    ::v-deep .v-label {
+      opacity: 1;
+      color: rgba(0, 0, 0, 0.87);
+      font-weight: 500;
+    }
+  }
+
+  &__result-chip {
+    height: 64px !important;
+    border-radius: 32px;
+  }
+
+  .min-vh-100 {
+    min-height: calc(
+      100vh - 130px
+    ); // Adjusting for typical app bar and footer height
+  }
+
+  .transition-all {
+    transition: all 0.3s ease;
+  }
+
+  [v-cloak] {
+    display: none;
+  }
 }
 </style>
