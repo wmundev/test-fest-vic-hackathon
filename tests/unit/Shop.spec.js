@@ -15,7 +15,7 @@ describe("Shop.vue", () => {
       screen.getByText("Atomo Diagnostics HIV Testing Kit"),
     ).toBeInTheDocument();
     expect(screen.getByText("Bundle of Condoms")).toBeInTheDocument();
-    expect(screen.getByText("2xPair Durex condoms")).toBeInTheDocument();
+    expect(screen.getByText("2xPair Durex Condoms")).toBeInTheDocument();
     expect(screen.getByText("Female Condom")).toBeInTheDocument();
   });
 
@@ -27,9 +27,9 @@ describe("Shop.vue", () => {
     expect(screen.getByText("$18.50")).toBeInTheDocument();
   });
 
-  it("renders Buy buttons for each product", () => {
+  it("renders Add to Cart buttons for each product", () => {
     render(Shop);
-    const buyButtons = screen.getAllByText("Buy");
-    expect(buyButtons.length).toBe(4);
+    const addToCartButtons = screen.getAllByText("Add to Cart");
+    expect(addToCartButtons.length).toBe(4);
   });
 });

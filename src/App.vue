@@ -56,6 +56,12 @@
               >
             </div>
           </v-col>
+          <v-col cols="12">
+            <div class="text-white text-caption ml-3 hackathon-disclaimer">
+              ⚠️ This is a hackathon project. All information displayed is for
+              hackathon purposes only and is not an actual product.
+            </div>
+          </v-col>
         </v-row>
       </v-footer>
     </v-app>
